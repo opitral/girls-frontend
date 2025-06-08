@@ -6,6 +6,11 @@
 	import { invalidateAll } from '$app/navigation';
 
 	let { children, data } = $props();
+
+	// $effect(() => {
+	// 	setCookie('lang', data.lang);
+	// 	console.log('change lang to:', data.lang);
+	// });
 </script>
 
 <div class="flex h-full flex-col">
@@ -28,12 +33,13 @@
 					onChange={async (lang) => {
 						setCookie('lang', lang);
 						invalidateAll();
+						console.log('change lang to:', lang);
 					}}
 					class={{
 						trigger: 'w-16',
 						content: ''
 					}}
-					bind:value={data.lang}
+					value={data.lang}
 					options={[
 						{ label: '🇺🇦', value: 'uk', extraLable: 'Українська' },
 						{ label: '🇷🇺', value: 'ru', extraLable: 'Русский' },

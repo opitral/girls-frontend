@@ -7,29 +7,41 @@
 	import ChevronUp from '@lucide/svelte/icons/chevron-up';
 	import { slide } from 'svelte/transition';
 	import Card from '$lib/comps/Card.svelte';
-	import { setCookie } from 'typescript-cookie';
 	import { createLocale } from '$lib/i18n.js';
-	import { goto, invalidateAll } from '$app/navigation';
+	import { goto } from '$app/navigation';
 	import { removeFalsy } from '$lib/helpers.js';
+	import { page } from '$app/state';
 
 	const { data } = $props();
 
-	// console.log(data.params);
+	$effect(() => {
+		console.log('data changed', data);
+	});
 
 	let showServices = $state(false);
 
 	// let isFirstLoad = true;
 
-	let filters = $state({
-		params: {
-			age: [data.params.min_age || 18, data.params.max_age || 50],
-			weight: [data.params.min_weight || 40, data.params.max_weight || 100],
-			height: [data.params.min_height || 150, data.params.max_height || 200],
-			bust: [data.params.min_breast || 1, data.params.max_breast || 7]
-		},
-		prices: [data.params.min_price || 0, data.params.max_price || 15000],
-		services: formatServices(data.services, data.params.service_ids),
-		sort: data.params.sort_by || 'default'
+	function getFilters() {
+		return {
+			params: {
+				age: [data.params.min_age || 18, data.params.max_age || 50],
+				weight: [data.params.min_weight || 40, data.params.max_weight || 100],
+				height: [data.params.min_height || 150, data.params.max_height || 200],
+				bust: [data.params.min_breast || 1, data.params.max_breast || 7]
+			},
+			prices: [data.params.min_price || 0, data.params.max_price || 15000],
+			services: formatServices(data.services, data.params.service_ids),
+			sort: data.params.sort_by || 'default'
+		};
+	}
+
+	let filters = $state(getFilters());
+
+	$effect(() => {
+		if (page.url.pathname === '/') {
+			filters = getFilters();
+		}
 	});
 
 	// let filters = $state({
@@ -72,11 +84,6 @@
 	// 	return prices[Math.floor(Math.random() * prices.length)];
 	// }
 
-	$effect(() => {
-		setCookie('lang', data.lang);
-		console.log('change lang to:', data.lang);
-	});
-
 	// $effect(() => {
 	// 	filters.services = formatServices(data.services);
 	// });
@@ -118,11 +125,13 @@
 		});
 
 		await goto('?' + params.toString(), {
-			// invalidateAll: true,
+			invalidateAll: true,
 			noScroll: true
 		});
 
-		await invalidateAll();
+		console.log(123);
+
+		// await invalidateAll();
 	}
 </script>
 
