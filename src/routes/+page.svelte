@@ -206,7 +206,7 @@
 </div>
 
 <div id="content" class="mx-auto mt-5 max-w-6xl px-5">
-	<div class="mb-5 flex items-center justify-between">
+	<div class="mb-5 flex justify-between gap-5 max-md:flex-col-reverse md:items-center">
 		<p class="font-medium md:text-lg">
 			{t('totalFound')}: <span class="font-bold"> {data.girls.length}</span>
 		</p>
