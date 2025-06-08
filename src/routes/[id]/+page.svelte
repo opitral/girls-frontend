@@ -1,7 +1,10 @@
 <script lang="ts">
 	import Button from '$lib/components/ui/button/button.svelte';
 	import { createLocale } from '$lib/i18n';
-	import { Check, Verified, X } from '@lucide/svelte';
+	// import { Check, Verified, X } from '@lucide/svelte';
+	import Check from '@lucide/svelte/icons/check';
+	import Verified from '@lucide/svelte/icons/verified';
+	import X from '@lucide/svelte/icons/x';
 	import Slider from './Slider.svelte';
 
 	// const items = ['/1.jpg', '/2.jpeg', '/3.jpg', '/4.jpeg', '/5.jpeg', '/6.jpeg'];

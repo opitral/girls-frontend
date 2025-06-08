@@ -1,6 +1,8 @@
 <script lang="ts">
 	import TinySlider from 'svelte-tiny-slider';
-	import { ArrowLeft, ArrowRight } from '@lucide/svelte';
+	// import { ArrowLeft, ArrowRight } from '@lucide/svelte';
+	import ArrowLeft from '@lucide/svelte/icons/arrow-left';
+	import ArrowRight from '@lucide/svelte/icons/arrow-right';
 
 	interface Props {
 		items: string[];

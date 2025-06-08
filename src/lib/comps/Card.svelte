@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { page } from '$app/state';
 	import { createLocale } from '$lib/i18n';
-	import { BadgeCheck } from '@lucide/svelte';
+	import BadgeCheck from '@lucide/svelte/icons/badge-check';
 
 	interface Props {
 		id: number;
