@@ -19,7 +19,7 @@
 	const t = $derived(createLocale(page.data.lang));
 </script>
 
-<a href="/{id}" id="card" class="relative overflow-hidden rounded-md">
+<a href="/{id}" id="card" class="relative cursor-pointer overflow-hidden rounded-md select-none">
 	<div class="absolute top-0 flex w-full justify-between pt-2">
 		<div class="rounded-r-sm bg-pink-900/50 p-1 px-3 shadow-md">
 			<span class="font-semibold text-white">{name}</span>

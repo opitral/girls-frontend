@@ -9,7 +9,7 @@
 	import Card from '$lib/comps/Card.svelte';
 	import { setCookie } from 'typescript-cookie';
 	import { createLocale } from '$lib/i18n.js';
-	import { goto } from '$app/navigation';
+	import { goto, invalidateAll } from '$app/navigation';
 	import { removeFalsy } from '$lib/helpers.js';
 
 	const { data } = $props();
@@ -118,9 +118,11 @@
 		});
 
 		await goto('?' + params.toString(), {
-			invalidateAll: true,
+			// invalidateAll: true,
 			noScroll: true
 		});
+
+		await invalidateAll();
 	}
 </script>
 

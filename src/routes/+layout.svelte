@@ -11,7 +11,7 @@
 <div class="flex h-full flex-col">
 	<header class="mx-auto mt-5 w-full max-w-6xl px-5">
 		<div class="flex items-center justify-between">
-			<a href="/">
+			<a href="/" class="cursor-pointer select-none">
 				<img src="/logo.svg" alt="" class="h-16 md:h-20" />
 			</a>
 

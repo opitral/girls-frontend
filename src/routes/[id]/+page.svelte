@@ -134,7 +134,7 @@
 
 				{#if data.description_localized}
 					<!-- <p class="mt-5 text-lg font-semibold">{t('description')}</p> -->
-					<p class="mt-2 text-sm">{data.description_localized}</p>
+					<p class="mt-2">{data.description_localized}</p>
 				{/if}
 
 				<!-- <p class="mt-2 text-sm">
