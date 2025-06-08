@@ -52,7 +52,7 @@
 		<div
 			class="mx-auto flex max-w-6xl items-center justify-between px-5 py-5 max-md:flex-col md:py-10"
 		>
-			<a href="/">
+			<a href="/" class="cursor-pointer select-none">
 				<img src="/logo.svg" alt="" class="h-20" />
 			</a>
 
