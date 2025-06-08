@@ -40,7 +40,7 @@
 
 		<div class="flex gap-10 max-md:flex-col">
 			<div class="relative shrink-0 md:w-1/2">
-				<Slider items={data.photos.map((e) => e.file_url)} />
+				<Slider items={data.photos?.map((e) => e.file_url) || []} />
 			</div>
 
 			<div class="grow">
