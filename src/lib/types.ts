@@ -16,8 +16,14 @@ export type GirlsShortData = {
 }[];
 
 export type GirlFullData = {
+	lang: string;
+	params: {
+		service_ids: Array<any>;
+	};
 	name: string;
 	phone: string;
+	telegram: string;
+	whatsapp: string;
 	height: number;
 	weight: number;
 	breast_size: number;
@@ -35,7 +41,7 @@ export type GirlFullData = {
 		old_cost?: number;
 	}>;
 	services: Array<{
-		additional_cost?: number;
+		additional_cost: number;
 		name_localized: string;
 	}>;
 	hair_color_localized: string;
@@ -43,5 +49,5 @@ export type GirlFullData = {
 	body_type_localized: string;
 	breast_type_localized: string;
 	age: number;
-	description_localized: any;
+	description_localized: string;
 };

@@ -44,7 +44,7 @@
 			</div>
 
 			<div class="grow">
-				<div class="flex items-center justify-between">
+				<div class="flex justify-between gap-5 max-md:flex-col md:items-center">
 					<h1 class="flex items-center gap-1 text-2xl font-semibold">
 						{data.name}
 						{#if data.is_verified}
@@ -52,18 +52,33 @@
 						{/if}
 					</h1>
 					<!-- <a href="tel:{data.phone}">{data.phone}</a> -->
-					<Button
-						href={showNumber ? `tel:${data.phone}` : undefined}
-						onclick={() => (showNumber = true)}
-						variant="outline"
-						class="!font-['Chivo_Mono'] text-lg"
-					>
-						{#if showNumber}
-							{data.phone}
-						{:else}
-							{data.phone.slice(0, 4)}{'*'.repeat(7)}{data.phone.slice(6, 8)}
+
+					<div class="flex items-center gap-2">
+						<Button
+							href={showNumber ? `tel:${data.phone}` : undefined}
+							onclick={() => (showNumber = true)}
+							variant="outline"
+							class="h-10 !font-['Chivo_Mono'] text-lg"
+						>
+							{#if showNumber}
+								{data.phone}
+							{:else}
+								{data.phone.slice(0, 4)}{'*'.repeat(7)}{data.phone.slice(6, 8)}
+							{/if}
+						</Button>
+
+						{#if data.telegram}
+							<Button class="size-10 p-0" variant="outline" target="_blank" href={data.telegram}>
+								<img src="/tg.svg" class="w-5 invert" alt="" />
+							</Button>
 						{/if}
-					</Button>
+
+						{#if data.whatsapp}
+							<Button class="size-10 p-0" variant="outline" target="_blank" href={data.whatsapp}>
+								<img src="/whatsapp.svg" class="w-5 invert" alt="" />
+							</Button>
+						{/if}
+					</div>
 				</div>
 
 				<div class="mt-5 flex divide-x rounded-md bg-white/10">
