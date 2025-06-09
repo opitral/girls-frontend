@@ -22,6 +22,8 @@
 
 			<div class="flex gap-2">
 				<Button
+					href="https://t.me/PutankaBot"
+					target="_blank"
 					class="
                     border border-pink-500 bg-pink-900 text-white hover:bg-white hover:text-black [&:not(:hover)>img]:invert"
 				>
