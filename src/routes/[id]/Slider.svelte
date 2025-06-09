@@ -1,8 +1,7 @@
 <script lang="ts">
-	import TinySlider from 'svelte-tiny-slider';
-	// import { ArrowLeft, ArrowRight } from '@lucide/svelte';
-	import ArrowLeft from '@lucide/svelte/icons/arrow-left';
-	import ArrowRight from '@lucide/svelte/icons/arrow-right';
+	import * as Carousel from '$lib/components/ui/carousel';
+	import * as Dialog from '$lib/components/ui/dialog';
+	import type { EmblaCarouselType } from 'embla-carousel';
 
 	interface Props {
 		items: string[];
@@ -10,120 +9,55 @@
 
 	let { items }: Props = $props();
 
-	let thumbnailsSlider: any = $state();
-	let currentIndex = $state(0);
-	let sliderWidth = $state(0);
+	let mainEmbla: EmblaCarouselType | undefined = $state(undefined);
+	let thumbEmbla: EmblaCarouselType | undefined = $state(undefined);
+
+	function scrollTo(index: number) {
+		mainEmbla?.scrollTo(index);
+	}
+
+	let showImage = $state('');
 </script>
 
-<TinySlider bind:currentIndex bind:sliderWidth change={(index) => thumbnailsSlider.setIndex(index)}>
-	{#each items as item, i (i)}
-		<img
-			src={item}
-			alt=""
-			style:width={`${sliderWidth}px`}
-			class="aspect-square shrink-0 rounded-md object-cover"
-			onerror={(e) => 'src' in e.currentTarget && (e.currentTarget.src = '/no_image.jpg')}
-		/>
-	{/each}
+<!-- Main slider -->
+<Carousel.Root
+	setApi={(api) => (mainEmbla = api)}
+	class="mx-auto mb-4 w-full max-w-2xl"
+	opts={{ loop: true }}
+>
+	<Carousel.Content>
+		{#each items as src}
+			<Carousel.Item class="flex justify-center" onclick={() => (showImage = src)}>
+				<img {src} alt="Main" class="aspect-square rounded-lg object-cover" />
+			</Carousel.Item>
+		{/each}
+	</Carousel.Content>
 
-	{#snippet controls({ setIndex, currentIndex, reachedEnd })}
-		<div class="thumbnails">
-			<TinySlider bind:this={thumbnailsSlider}>
-				{#snippet children({ sliderWidth })}
-					{#each items as item, i (i)}
-						<button
-							class="thumbnail inset"
-							class:active={i == currentIndex}
-							style:width="calc((({sliderWidth}px - 2rem) / 5))"
-							onclick={() => setIndex(i)}
-							onfocus={() => setIndex(i)}
-						>
-							<img
-								src={item}
-								alt=""
-								class="aspect-square object-cover"
-								onerror={(e) => 'src' in e.currentTarget && (e.currentTarget.src = '/no_image.jpg')}
-							/>
-						</button>
-					{/each}
-				{/snippet}
-			</TinySlider>
+	<Carousel.Previous class="-left-5 max-md:hidden" variant="default" />
+	<Carousel.Next class="-right-5 max-md:hidden" variant="default" />
+</Carousel.Root>
 
-			{#if currentIndex > 0}
-				<button
-					class="
-                        absolute top-1/2 -left-5 -translate-y-20 cursor-pointer
-                        rounded-full bg-pink-700 p-2 hover:bg-pink-600
-                    "
-					onclick={() => setIndex(currentIndex - 1)}><ArrowLeft /></button
-				>
-			{/if}
+<!-- Thumbnail slider -->
+<Carousel.Root
+	setApi={(api) => (thumbEmbla = api)}
+	class="mx-auto w-full max-w-2xl"
+	opts={{ containScroll: 'keepSnaps', dragFree: true }}
+>
+	<Carousel.Content>
+		{#each items as src, i}
+			<Carousel.Item onclick={() => scrollTo(i)} class="basis-1/4 cursor-pointer px-1">
+				<img
+					{src}
+					alt="Thumb"
+					class="max-h-24 w-full rounded border-2 object-cover transition-all hover:border-white"
+				/>
+			</Carousel.Item>
+		{/each}
+	</Carousel.Content>
+</Carousel.Root>
 
-			{#if !reachedEnd}
-				<button
-					class="
-                        absolute top-1/2 -right-5 -translate-y-20 cursor-pointer
-                        rounded-full bg-pink-700 p-2 hover:bg-pink-600
-                    "
-					onclick={() => setIndex(currentIndex + 1)}
-				>
-					<ArrowRight /></button
-				>
-			{/if}
-		</div>
-	{/snippet}
-</TinySlider>
-
-<style lang="postcss">
-	.thumbnails :global(.slider-content) {
-		display: flex;
-		gap: 0.5rem;
-		padding: 0.5rem 0;
-	}
-
-	.thumbnail {
-		padding: 0;
-		margin: 0;
-		border: 0;
-		border-radius: 0.25rem;
-		background: gray;
-		overflow: hidden;
-	}
-
-	.thumbnail:hover {
-		background: darkgray;
-	}
-
-	.thumbnail:hover img {
-		filter: brightness(1.2);
-	}
-
-	.thumbnail.active:not(.inset) {
-		outline: 2px solid white;
-		outline-offset: 2px;
-	}
-
-	.thumbnail.active.inset {
-		position: relative;
-	}
-
-	.thumbnail.active.inset::before {
-		content: '';
-		display: block;
-		position: absolute;
-		top: 0;
-		left: 0;
-		width: 100%;
-		height: 100%;
-		border-radius: 0.25rem;
-		box-shadow: inset 0 0 0 2px white;
-		z-index: 2;
-		pointer-events: none;
-	}
-
-	.thumbnail img {
-		display: block;
-		width: 100%;
-		height: auto;
-	}
-</style>
+<Dialog.Root open={!!showImage} onOpenChange={() => (showImage = '')}>
+	<Dialog.Content class="max-h-[90vh] p-0" onclick={() => (showImage = '')}>
+		<img src={showImage} alt="Main" class=" h-full rounded-lg object-cover" />
+	</Dialog.Content>
+</Dialog.Root>
